@@ -1,0 +1,140 @@
+      flowchart TD
+      subgraph A["Orchestration & Monitoring Layer"]
+            Z["Orchestrator Agent<br>⚙️<br>Process State Manager"]
+            ZMonitor["Process Dashboard<br>Real-time KPI Tracking<br>Exception Queue"]
+      end
+      subgraph B1["Phase 1: Order Intake & Capture"]
+            A1["Order Intake Agent<br>📥<br>Multi-Channel Receiver"]
+            A2["Data Standardization Engine<br>JSON Transformer"]
+            A3["Initial Order Record<br>SO_HEADERS Creation"]
+      end
+      subgraph B2["Phase 2: Order Validation & Compliance"]
+            B1
+            B2_1["Credit Service API<br>Customer Credit Limit"]
+            B3["Address Verification Service<br>USPS/UPS APIs"]
+            B4["Compliance Engine<br>Restricted Items Validator"]
+            B5["Approval Decision Engine<br>Score: 0-100% Confidence"]
+      end
+      subgraph B3["Phase 3: Inventory Optimization & Sourcing"]
+            C1["Inventory &amp; Logistics Agent<br>📦<br>Supply Chain Optimizer"]
+            C2["Multi-Warehouse Inventory<br>Query: MTL_ONHAND_QUANTITIES"]
+            C3["Optimization Engine<br>Rules: Proximity, Cost, Stock Level"]
+            C4["Supplier Catalog Check<br>Lead Time vs Backorder Cost"]
+            C5["Inventory Reservation<br>Shipping Method Selection"]
+      end
+      subgraph B4["Phase 4: Fulfillment Execution"]
+            D1["Fulfillment Agent<br>🚚<br>Warehouse Commander"]
+            D2["Digital Workflow Generator<br>Picking List, Packing Slip, Label"]
+            D3["Robotic System Interface<br>AGV Instructions, ASRS Commands"]
+            D4["Real-time WMS Updates<br>Picked → Packed → Shipped States"]
+            D5["Carrier Integration<br>Tracking Number Generation"]
+      end
+      subgraph B5["Phase 5: Financial Settlement"]
+            E1["Invoicing &amp; Settlement Agent<br>💰<br>Financial Processor"]
+            E2["ERP Billing Module<br>RA_INTERFACE_LINES Creation"]
+            E3["Payment Gateway Integration<br>Stripe/Adyen/Authorize.net"]
+            E4["AR Ledger Posting<br>GL Account Reconciliation"]
+            E5["Dunning Engine<br>Payment Retry Logic"]
+      end
+      subgraph B6["Phase 6: Customer Experience"]
+            F1["Customer Communication Agent<br>💬<br>Experience Manager"]
+            F2["Multi-channel Comms<br>Email, SMS, Mobile Push"]
+            F3["Status Notifications<br>Delay Alerts, Exception Updates"]
+            F4["NLP-powered Support<br>Where is my order? Bot"]
+            F5["Customer History Logging<br>Sentiment Analysis"]
+      end
+      subgraph B7["Phase 7: Procurement Conditional"]
+            G1["Procurement Agent<br>📋<br>Supplier Orchestrator"]
+            G2["Purchase Order Creation<br>PO_HEADERS &amp; PO_LINES"]
+            G3["EDI/API Integration<br>Supplier Portal Updates"]
+            G4["Drop-ship Monitoring<br>Supplier SLA Compliance"]
+      end
+      subgraph C["ERP Data Layer"]
+            DS1["Sales Orders<br>OE_ORDER_HEADERS"]
+            DS2["Inventory<br>MTL_ONHAND_QUANTITIES"]
+            DS3["Shipments<br>WSH_SHIPMENTS"]
+            DS4["Accounting<br>RA_INTERFACE_LINES"]
+            DS5["Procurement<br>PO_HEADERS"]
+      end
+      subgraph D["External Services"]
+            ES1["Payment Gateways<br>Stripe/Adyen"]
+            ES2["Carrier APIs<br>UPS/FedEx/USPS"]
+            ES3["Address Validation<br>SmartyStreets"]
+            ES4["Credit Services<br>Experian/Equifax"]
+      end
+      subgraph E["Diagram Legend"]
+            L1["Agent Node<br>Business Logic"]
+            L2["Process Step<br>Action/Task"]
+            L3["Data Store<br>ERP Table"]
+            L4["External Service<br>API Integration"]
+            L5["Conditional Flow<br>Business Rule"]
+      end
+      Z -. Process Monitoring &amp;<br>Exception Handling .-> ZMonitor
+      A1 -- Raw Order Data --> A2
+      A2 -- Structured Order Data --> A3
+      B1 -- Credit Check --> B2_1
+      B1 -- Address Validation --> B3
+      B1 -- Regulatory Check --> B4
+      B2_1 -- Validation Results --> B5
+      B3 -- Validation Results --> B5
+      B4 -- Validation Results --> B5
+      C1 -- "Real-time Stock Check" --> C2
+      C1 -- Sourcing Logic --> C3
+      C1 -- "Drop-ship Analysis" --> C4
+      C2 -- Optimal Fulfillment Plan --> C5
+      C3 -- Optimal Fulfillment Plan --> C5
+      C4 -- Optimal Fulfillment Plan --> C5
+      D1 -- Task Creation --> D2
+      D1 -- Automation Coordination --> D3
+      D1 -- Status Tracking --> D4
+      D2 -- Shipment Confirmation --> D5
+      D3 -- Shipment Confirmation --> D5
+      D4 -- Shipment Confirmation --> D5
+      E1 -- Invoice Generation --> E2
+      E1 -- Payment Processing --> E3
+      E1 -- Accounting Updates --> E4
+      E1 -- Collections Management --> E5
+      F1 -- Transactional Messaging --> F2
+      F1 -- Proactive Alerts --> F3
+      F1 -- Query Handling --> F4
+      F1 -- CRM Integration --> F5
+      G1 -- PO Automation --> G2
+      G1 -- Supplier Comms --> G3
+      G1 -- Order Tracking --> G4
+      A1 -- Order ID: SO_12345 --> B1
+      B5 -- Approval Decision --> C1
+      C5 -- Fulfillment Plan --> D1
+      C1 -- "If Out of Stock &amp;<br>Drop-ship Viable" --> G1
+      G4 -- Supplier Tracking Info --> F1
+      D5 -- Shipment Data<br>Tracking: 1Z123456 --> E1
+      E4 -- Payment Status --> F1
+      Z L_Z_A1_0@-- Process Initiation --> A1
+      Z -- Validation Oversight --> B1
+      Z -- Inventory Strategy --> C1
+      Z -- Fulfillment Monitoring --> D1
+      Z -- Financial Controls --> E1
+      Z -- Comms Governance --> F1
+      Z -- Procurement Rules --> G1
+      B5 -. Low Confidence<br>Flag for Review .-> ZMonitor
+      E5 -. Payment Failed<br>Escalate to Human .-> ZMonitor
+      C4 -. Complex Sourcing<br>Decision Required .-> ZMonitor
+
+      Z:::orchestrator
+      A1:::intakeAgent
+      B1:::validationAgent
+      C1:::inventoryAgent
+      D1:::fulfillmentAgent
+      E1:::financeAgent
+      F1:::commsAgent
+      G1:::procurementAgent
+      classDef intakeAgent fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+      classDef validationAgent fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+      classDef inventoryAgent fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+      classDef fulfillmentAgent fill:#fff3e0,stroke:#e65100,stroke-width:2px
+      classDef financeAgent fill:#ffebee,stroke:#b71c1c,stroke-width:2px
+      classDef commsAgent fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+      classDef procurementAgent fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+      classDef orchestrator fill:#f5f5f5,stroke:#212121,stroke-width:3px
+
+      L_Z_A1_0@{ animation: fast } 
+

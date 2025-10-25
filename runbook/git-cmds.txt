@@ -1,0 +1,5 @@
+list remotes --> git remote -v  
+add pull-source --> git remote add pullsource https://github.com/bytebyteai/ai-eng-projects.git
+add push-dest  --> git remote add pushdestination https://github.com/chetanvartak/llm_journey.git
+
+git pull pullsource main

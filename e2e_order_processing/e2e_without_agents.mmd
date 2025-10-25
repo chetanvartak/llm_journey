@@ -1,0 +1,17 @@
+flowchart LR
+    A[Start] --> B[Order Intake]
+    B --> C[Order Validation]
+    C --> E[Hold Inventory]
+    E --> G[Fulfillment]
+    G --> H[Invoicing]
+    H --> I[Settlement]
+    I --> K[End]
+    
+    B -- Exception --> Y[Contact Operations]
+    C -- Exception --> Y
+    E -- Exception --> Y
+    G -- Exception --> Y
+    H -- Exception --> Y
+    I -- Exception --> Y
+    
+    Y --> K

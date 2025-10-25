@@ -1,0 +1,75 @@
+flowchart LR
+    A[Start] --> B[Order Intake]
+    B --> C[Order Validation]
+    C --> D[Hold Inventory]
+    D --> E[Fulfillment]
+    E --> F[Invoicing]
+    F --> G[Settlement]
+    G --> H[End]
+    
+    B -->|Exception| OIA[Order 
+    Intake Agent]
+    OIA -->|Issue 
+    Resolved| C
+    OIA -->|Issue 
+    Not Resolved| HR-OIA[Human 
+    Resolver]
+    HR-OIA -->|Manual 
+    Resolution| C
+
+    C -->|Exception| OVA[Order 
+    Validation Agent]
+    OVA -->|Issue 
+    Resolved| D
+    OVA -->|Issue 
+    Not Resolved| HR-OVA[Human 
+    Resolver]
+    HR-OVA -->|Manual
+     Resolution| D
+    
+    D -->|Exception| HIA[Hold 
+    Inventory Agent]
+    HIA -->|Issue 
+    Resolved| E
+    HIA -->|Issue 
+    Not Resolved| HR-HIA[Human 
+    Resolver]
+    HR-HIA -->|Manual 
+    Resolution| E
+
+    E -->|Exception| OFA[Order 
+    Fulfillment Agent]
+    OFA -->|Issue
+     Resolved| F
+    OFA -->|Issue 
+    Not Resolved| HR-OFA[Human
+     Resolver]
+    HR-OFA -->|Manual
+     Resolution| F
+
+    F -->|Exception| OInvA[Order
+     Invoicing Agent]
+    OInvA -->|Issue 
+    Resolved| G
+    OInvA -->|Issue 
+    Not Resolved| HR-OInvA[Human
+     Resolver]
+    HR-OInvA -->|Manual
+     Resolution| G
+
+    G -->|Exception| OSA[Order
+     Settlement Agent]
+    OSA -->|Issue
+     Resolved| H
+    OSA  -->|Issue
+     Not Resolved| HR-OSA[Human
+      Resolver]
+    HR-OSA -->|Manual
+     Resolution| H
+
+    style OIA fill:#add8e6
+    style OVA fill:#add8e6
+    style HIA fill:#add8e6
+    style OFA fill:#add8e6
+    style OInvA fill:#add8e6
+    style OSA fill:#add8e6

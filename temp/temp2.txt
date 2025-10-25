@@ -1,0 +1,15 @@
+Order Intake,  Order Validation, Hold Inventory, fulfillment, invoicing and settlement, customer Communication
+
+ Agent - Business rule validation and compliance
+
+Inventory & Logistics Agent - Stock optimization and sourcing
+
+Fulfillment Agent - Warehouse execution and shipping
+
+Invoicing & Settlement Agent - Financial processing
+
+Customer Communication Agent - Customer experience management
+
+Procurement Agent - Supplier coordination (conditional)
+
+Orchestrator Agent - Process coordination
