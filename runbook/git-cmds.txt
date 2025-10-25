@@ -26,12 +26,15 @@ If ".git" doesn't exists -
 - verify pull source --> git remote -v
 - exe --> git pull pushdestination main
 
-3. Push to llm_journey
+3. Push to llm_journey as new branch
 - cd /c/src/python/ai-cohort/llm_journey
 - exe
     git add .
     git commit -m "4th commit"
-    git push
+    git push --set-upstream pushdestination <new_branch>
+
+4. Merge llm_journey <new_branch> to main
+- From UI
 
 
 
