@@ -1,0 +1,37 @@
+Setup - 
+- verify ".git" folder exists in 2 locations - 
+    - source - /c/src/python/ai-cohort/bytebyteai
+    - destination - /c/src/python/ai-cohort/llm_journey
+
+If ".git" doesn't exists - 
+    cd /c/src/python/ai-cohort/bytebyteai
+    git init
+    git remote add pullsource https://github.com/bytebyteai/ai-eng-projects.git
+
+    cd /c/src/python/ai-cohort/llm_journey
+    git init
+    git remote add pushdestination https://github.com/chetanvartak/llm_journey.git       
+
+
+1. Pull from bytebyteai
+- open new Git Bash Terminal
+- cd /c/src/python/ai-cohort/bytebyteai
+- verify pull source --> git remote -v
+- exe --> git pull pullsource main
+
+
+2. Pull from llm_journey
+- open new Git Bash Terminal
+- cd /c/src/python/ai-cohort/llm_journey
+- verify pull source --> git remote -v
+- exe --> git pull pushdestination main
+
+3. Push to llm_journey
+- cd /c/src/python/ai-cohort/llm_journey
+- exe
+    git add .
+    git commit -m "4th commit"
+    git push
+
+
+

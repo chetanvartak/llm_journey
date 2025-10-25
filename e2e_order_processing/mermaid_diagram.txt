@@ -1,0 +1,128 @@
+flowchart TD
+    %% Define styles for different agent types
+    classDef intakeAgent fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef validationAgent fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef inventoryAgent fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef fulfillmentAgent fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef financeAgent fill:#ffebee,stroke:#b71c1c,stroke-width:2px
+    classDef commsAgent fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef procurementAgent fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+    classDef orchestrator fill:#f5f5f5,stroke:#212121,stroke-width:3px
+
+    subgraph A [Orchestration & Monitoring Layer]
+        %% --- FIX: Added :::orchestrator class assignment ---
+        Z[Orchestrator Agent<br/>⚙️<br/>Process State Manager]:::orchestrator
+        Z -.->|Process Monitoring &<br/>Exception Handling| ZMonitor[Process Dashboard<br/>Real-time KPI Tracking<br/>Exception Queue]
+    end
+
+    %% Order Intake Process
+    subgraph B1 [Phase 1: Order Intake & Capture]
+        A1[Order Intake Agent<br/>📥<br/>Multi-Channel Receiver]:::intakeAgent
+        A1 -->|Raw Order Data| A2[Data Standardization Engine<br/>JSON Transformer]
+        A2 -->|Structured Order Data| A3[Initial Order Record<br/>SO_HEADERS Creation]
+    end
+
+    %% Order Validation Process
+    subgraph B2 [Phase 2: Order Validation & Compliance]
+        B1[Order Validation Agent<br/>✅<br/>Business Rules Engine]:::validationAgent
+        B1 -->|Credit Check| B2_1[Credit Service API<br/>Customer Credit Limit]
+        B1 -->|Address Validation| B3[Address Verification Service<br/>USPS/UPS APIs]
+        B1 -->|Regulatory Check| B4[Compliance Engine<br/>Restricted Items Validator]
+        B2_1 & B3 & B4 -->|Validation Results| B5[Approval Decision Engine<br/>Score: 0-100% Confidence]
+    end
+
+    %% Inventory & Logistics Process
+    subgraph B3 [Phase 3: Inventory Optimization & Sourcing]
+        C1[Inventory & Logistics Agent<br/>📦<br/>Supply Chain Optimizer]:::inventoryAgent
+        C1 -->|Real-time Stock Check| C2[Multi-Warehouse Inventory<br/>Query: MTL_ONHAND_QUANTITIES]
+        C1 -->|Sourcing Logic| C3[Optimization Engine<br/>Rules: Proximity, Cost, Stock Level]
+        C1 -->|Drop-ship Analysis| C4[Supplier Catalog Check<br/>Lead Time vs Backorder Cost]
+        C2 & C3 & C4 -->|Optimal Fulfillment Plan| C5[Inventory Reservation<br/>Shipping Method Selection]
+    end
+
+    %% Fulfillment Execution Process
+    subgraph B4 [Phase 4: Fulfillment Execution]
+        D1[Fulfillment Agent<br/>🚚<br/>Warehouse Commander]:::fulfillmentAgent
+        D1 -->|Task Creation| D2[Digital Workflow Generator<br/>Picking List, Packing Slip, Label]
+        D1 -->|Automation Coordination| D3[Robotic System Interface<br/>AGV Instructions, ASRS Commands]
+        D1 -->|Status Tracking| D4[Real-time WMS Updates<br/>Picked → Packed → Shipped States]
+        D2 & D3 & D4 -->|Shipment Confirmation| D5[Carrier Integration<br/>Tracking Number Generation]
+    end
+
+    %% Financial Settlement Process
+    subgraph B5 [Phase 5: Financial Settlement]
+        E1[Invoicing & Settlement Agent<br/>💰<br/>Financial Processor]:::financeAgent
+        E1 -->|Invoice Generation| E2[ERP Billing Module<br/>RA_INTERFACE_LINES Creation]
+        E1 -->|Payment Processing| E3[Payment Gateway Integration<br/>Stripe/Adyen/Authorize.net]
+        E1 -->|Accounting Updates| E4[AR Ledger Posting<br/>GL Account Reconciliation]
+        E1 -->|Collections Management| E5[Dunning Engine<br/>Payment Retry Logic]
+    end
+
+    %% Customer Communication Process
+    subgraph B6 [Phase 6: Customer Experience]
+        F1[Customer Communication Agent<br/>💬<br/>Experience Manager]:::commsAgent
+        F1 -->|Transactional Messaging| F2[Multi-channel Comms<br/>Email, SMS, Mobile Push]
+        F1 -->|Proactive Alerts| F3[Status Notifications<br/>Delay Alerts, Exception Updates]
+        F1 -->|Query Handling| F4[NLP-powered Support<br/>Where is my order? Bot]
+        F1 -->|CRM Integration| F5[Customer History Logging<br/>Sentiment Analysis]
+    end
+
+    %% Procurement Process (Conditional)
+    subgraph B7 [Phase 7: Procurement Conditional]
+        G1[Procurement Agent<br/>📋<br/>Supplier Orchestrator]:::procurementAgent
+        G1 -->|PO Automation| G2[Purchase Order Creation<br/>PO_HEADERS & PO_LINES]
+        G1 -->|Supplier Comms| G3[EDI/API Integration<br/>Supplier Portal Updates]
+        G1 -->|Order Tracking| G4[Drop-ship Monitoring<br/>Supplier SLA Compliance]
+    end
+
+    %% Main Process Flow
+    A1 -->|Order ID: SO_12345| B1
+    B5 -->|Approval Decision| C1
+    C5 -->|Fulfillment Plan| D1
+    
+    %% Conditional Flows
+    C1 -->|If Out of Stock &<br/>Drop-ship Viable| G1
+    G4 -->|Supplier Tracking Info| F1
+    
+    D5 -->|Shipment Data<br/>Tracking: 1Z123456| E1
+    E4 -->|Payment Status| F1
+    
+    %% Orchestrator Connections
+    Z -->|Process Initiation| A1
+    Z -->|Validation Oversight| B1
+    Z -->|Inventory Strategy| C1
+    Z -->|Fulfillment Monitoring| D1
+    Z -->|Financial Controls| E1
+    Z -->|Comms Governance| F1
+    Z -->|Procurement Rules| G1
+
+    %% Exception Handling Paths
+    B5 -.->|Low Confidence<br/>Flag for Review| ZMonitor
+    E5 -.->|Payment Failed<br/>Escalate to Human| ZMonitor
+    C4 -.->|Complex Sourcing<br/>Decision Required| ZMonitor
+
+    %% Data Store Connections
+    subgraph C [ERP Data Layer]
+        DS1[Sales Orders<br/>OE_ORDER_HEADERS]
+        DS2[Inventory<br/>MTL_ONHAND_QUANTITIES]
+        DS3[Shipments<br/>WSH_SHIPMENTS]
+        DS4[Accounting<br/>RA_INTERFACE_LINES]
+        DS5[Procurement<br/>PO_HEADERS]
+    end
+
+    %% External Systems
+    subgraph D [External Services]
+        ES1[Payment Gateways<br/>Stripe/Adyen]
+        ES2[Carrier APIs<br/>UPS/FedEx/USPS]
+        ES3[Address Validation<br/>SmartyStreets]
+        ES4[Credit Services<br/>Experian/Equifax]
+    end
+
+    %% Legend
+    subgraph E [Diagram Legend]
+        L1[Agent Node<br/>Business Logic]
+        L2[Process Step<br/>Action/Task]
+        L3[Data Store<br/>ERP Table]
+        L4[External Service<br/>API Integration]
+        L5[Conditional Flow<br/>Business Rule]
+    end

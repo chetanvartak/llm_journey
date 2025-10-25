@@ -1,0 +1,22 @@
+name: web_agent_latest
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - ollama==0.6.0
+      - ddgs==9.6.1
+      - fastapi==0.116.1
+      - uvicorn==0.35.0
+      - jupyter==1.1.1
+      - ipykernel==6.29.5
+      - langchain==1.0.2
+      - langchain-classic==1.0.0
+      - langchain-community==0.4
+      - langchain-core==1.0.0 
+      - langchain-huggingface==1.0.0
+      - langchain-ollama==1.0.0
+      - langchain-openai==1.0.0
+      - langchain-text-splitters==1.0.0
+      - openai==2.5.0
